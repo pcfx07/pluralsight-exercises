@@ -107,7 +107,7 @@ namespace OdeToFood
         {
             // /Home/Index (id is optional)
             routeBuilder.MapRoute("Default", "{controller=Home}/{action=Index}/{id?}");
-            routeBuilder.MapRoute("About", "{controller}/{action=Address}");
+            //routeBuilder.MapRoute("About", "{controller}/{action=Address}");
         }
     }
 }
