@@ -67,6 +67,12 @@ namespace OdeToFood
                 app.UseDeveloperExceptionPage();
             }
 
+            // tries to find default file and invokes StaticFiles middleware
+            // else forwards request to app.Run middleware
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            //app.UseFileServer();
+
             app.Run(async (context) =>
             {
                 #region Showing Exception Details
