@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace OdeToFood
 {
@@ -24,21 +25,43 @@ namespace OdeToFood
         // Setup HTTP processing pipeline used to respond to requests.
         public void Configure(IApplicationBuilder app, 
                               IHostingEnvironment env,
-                              /*IConfiguration configuration*/
-                              IGreeter greeter)
+                              IGreeter greeter,
+                              ILogger<Startup> logger)
         {
-            if (env.IsDevelopment())
+            // only invoked once when framework is ready to setup the pipeline! 
+            // needs to return the middleware function to asp.net core
+            app.Use(next =>
             {
-                app.UseDeveloperExceptionPage();
-            }
+                // invoked once per http request that reaches this middleware
+                return async context =>
+                {
+                    logger.LogInformation("request incoming!");
+                    if (context.Request.Path.StartsWithSegments("/mysegment"))
+                    {
+                        await context.Response.WriteAsync("Hit!");
+                        logger.LogInformation("request handled!");
+                    }
+                    else
+                    {
+                        // pass to next middleware
+                        await next(context);
+                        // after next, this is control flow going back out of the pipeline
+                        logger.LogInformation("request outgoing!");
+                    }
+                };
+            });
+
+            app.UseWelcomePage(new WelcomePageOptions
+            {
+                Path = "/wp"
+            });
 
             app.Run(async (context) =>
             {
-                //var greeting = configuration["Greeting"];
-
                 // Use an interface for further abstraction!
                 var greeting = greeter.GetMessageOfTheDay();
                 await context.Response.WriteAsync(greeting);
+                logger.LogInformation("greeting handled!");
             });
         }
     }
