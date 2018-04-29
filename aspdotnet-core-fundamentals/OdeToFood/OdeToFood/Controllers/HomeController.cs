@@ -1,21 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OdeToFood.Models;
+using OdeToFood.Services;
 
 namespace OdeToFood.Controllers
 {
     public class HomeController : Controller
     {
+        private IRestaurantData _restaurantData;
+
+        public HomeController(IRestaurantData restaurantData)
+        {
+            _restaurantData = restaurantData;
+        }
+
         // ENTRY POINT by convention
         public IActionResult Index()
         {
             // will be displayed in browser
             //return "Hello from the HomeController";
-
-            var model = new Restaurant
-            {
-                Id = 1,
-                Name = "Scott's Pizza Palace"
-            };
 
             #region Action Results
             // CORE CONCEPT: seperate deciding what to do, from actual doing
@@ -27,6 +29,13 @@ namespace OdeToFood.Controllers
             // what to do with this result
             //return new ObjectResult(model);
             #endregion
+
+            //var model = new Restaurant
+            //{
+            //    Id = 1,
+            //    Name = "Scott's Pizza Palace"
+            //};
+            var model = _restaurantData.GetAll();
 
             // RENDER MODEL AS HTML
             return View(model);

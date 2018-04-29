@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using OdeToFood.Services;
 
 namespace OdeToFood
 {
@@ -20,6 +16,8 @@ namespace OdeToFood
         {
             // Register custom services before using!
             services.AddSingleton<IGreeter, Greeter>();
+            // reuse for one request
+            services.AddScoped<IRestaurantData, InMemoryRestaurantData>();
 
             services.AddMvc();
         }

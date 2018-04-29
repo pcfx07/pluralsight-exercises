@@ -1,13 +1,23 @@
 ﻿@*add model directive to get intellisense*@
-@model OdeToFood.Models.Restaurant
+@model IEnumerable<OdeToFood.Models.Restaurant>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Razor Page Example</title>
 </head>
 <body>
+    <table>
+        @foreach (var restaurant in Model)
+        {
+            <tr>
+                <td>@restaurant.Id</td>
+                <td>@restaurant.Name</td>
+            </tr>
+        }
+
+    </table>
     @*model represents the model object passed in to the view result*@
-    <h1>@this.Model.Name</h1>
-    <div>The ID value is @Model.Id</div>
+    @*<h1>@this.Model.Name</h1>
+    <div>The ID value is @Model.Id</div>*@
 </body>
 </html>
