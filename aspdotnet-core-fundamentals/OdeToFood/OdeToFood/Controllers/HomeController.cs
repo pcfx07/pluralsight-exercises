@@ -1,16 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OdeToFood.Models;
 using OdeToFood.Services;
+using OdeToFood.ViewModels;
 
 namespace OdeToFood.Controllers
 {
     public class HomeController : Controller
     {
         private IRestaurantData _restaurantData;
+        private IGreeter _greeter;
 
-        public HomeController(IRestaurantData restaurantData)
+        public HomeController(IRestaurantData restaurantData, IGreeter greeter)
         {
             _restaurantData = restaurantData;
+            _greeter = greeter;
         }
 
         // ENTRY POINT by convention
@@ -30,12 +33,12 @@ namespace OdeToFood.Controllers
             //return new ObjectResult(model);
             #endregion
 
-            //var model = new Restaurant
-            //{
-            //    Id = 1,
-            //    Name = "Scott's Pizza Palace"
-            //};
-            var model = _restaurantData.GetAll();
+            //var model = _restaurantData.GetAll();
+            var model = new HomeIndexViewModel()
+            {
+                Restaurants = _restaurantData.GetAll(),
+                CurrentMessage = _greeter.GetMessageOfTheDay()
+            };
 
             // RENDER MODEL AS HTML
             return View(model);
