@@ -69,14 +69,16 @@ namespace OdeToFood
 
             app.Run(async (context) =>
             {
-                // PROVOKE EXCEPTION
-                //throw new Exception("error!");
-                int x = 4;
-                int divisionByZero = 5 / (x - 4);
+                #region Showing Exception Details
+                //// PROVOKE EXCEPTION
+                ////throw new Exception("error!");
+                //int x = 4;
+                //int divisionByZero = 5 / (x - 4);
+                #endregion
 
                 // Use an interface for further abstraction!
                 var greeting = greeter.GetMessageOfTheDay();
-                await context.Response.WriteAsync(greeting);
+                await context.Response.WriteAsync($"{greeting} : {env.EnvironmentName}");
                 logger.LogInformation("greeting handled!");
             });
         }
