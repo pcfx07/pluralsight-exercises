@@ -16,13 +16,16 @@ namespace OdeToFood
         
         public void ConfigureServices(IServiceCollection services)
         {
+            // Register custom services before using!
+            services.AddSingleton<IGreeter, Greeter>();
         }
 
         // IApplicationBuilder etc. are already registered for us.
         // Setup HTTP processing pipeline used to respond to requests.
         public void Configure(IApplicationBuilder app, 
                               IHostingEnvironment env,
-                              IConfiguration configuration)
+                              /*IConfiguration configuration*/
+                              IGreeter greeter)
         {
             if (env.IsDevelopment())
             {
@@ -31,7 +34,10 @@ namespace OdeToFood
 
             app.Run(async (context) =>
             {
-                var greeting = configuration["Greeting"];
+                //var greeting = configuration["Greeting"];
+
+                // Use an interface for further abstraction!
+                var greeting = greeter.GetMessageOfTheDay();
                 await context.Response.WriteAsync(greeting);
             });
         }
