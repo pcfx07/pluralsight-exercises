@@ -5,20 +5,24 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace OdeToFood
 {
+    // Provides place to register your custom services to use with ASP.NET Core
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        
         public void ConfigureServices(IServiceCollection services)
         {
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        // IApplicationBuilder etc. are already registered for us.
+        // Setup HTTP processing pipeline used to respond to requests.
+        public void Configure(IApplicationBuilder app, 
+                              IHostingEnvironment env,
+                              IConfiguration configuration)
         {
             if (env.IsDevelopment())
             {
@@ -27,7 +31,8 @@ namespace OdeToFood
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Hello World!");
+                var greeting = configuration["Greeting"];
+                await context.Response.WriteAsync(greeting);
             });
         }
     }

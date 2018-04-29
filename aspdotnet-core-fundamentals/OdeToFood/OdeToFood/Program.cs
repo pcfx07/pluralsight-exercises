@@ -12,11 +12,17 @@ namespace OdeToFood
 {
     public class Program
     {
+        // ENTRY POINT
         public static void Main(string[] args)
         {
             BuildWebHost(args).Run();
         }
 
+        // IIS acts as a proxy for our Webhost, forwards requests into app.
+        // App has it's own webserver which is configured here.
+        // 1. will use cross-plattform Kestrel webserver
+        // 2. IIS integration
+        // 3. logging
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
