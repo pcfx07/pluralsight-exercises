@@ -28,36 +28,52 @@ namespace OdeToFood
                               IGreeter greeter,
                               ILogger<Startup> logger)
         {
-            // only invoked once when framework is ready to setup the pipeline! 
-            // needs to return the middleware function to asp.net core
-            app.Use(next =>
-            {
-                // invoked once per http request that reaches this middleware
-                return async context =>
-                {
-                    logger.LogInformation("request incoming!");
-                    if (context.Request.Path.StartsWithSegments("/mysegment"))
-                    {
-                        await context.Response.WriteAsync("Hit!");
-                        logger.LogInformation("request handled!");
-                    }
-                    else
-                    {
-                        // pass to next middleware
-                        await next(context);
-                        // after next, this is control flow going back out of the pipeline
-                        logger.LogInformation("request outgoing!");
-                    }
-                };
-            });
+            #region using IApplicationBuilder
+            //// only invoked once when framework is ready to setup the pipeline! 
+            //// needs to return the middleware function to asp.net core
+            //app.Use(next =>
+            //{
+            //    // invoked once per http request that reaches this middleware
+            //    return async context =>
+            //    {
+            //        logger.LogInformation("request incoming!");
+            //        if (context.Request.Path.StartsWithSegments("/mysegment"))
+            //        {
+            //            await context.Response.WriteAsync("Hit!");
+            //            logger.LogInformation("request handled!");
+            //        }
+            //        else
+            //        {
+            //            // pass to next middleware
+            //            await next(context);
+            //            // after next, this is control flow going back out of the pipeline
+            //            logger.LogInformation("request outgoing!");
+            //        }
+            //    };
+            //});
 
-            app.UseWelcomePage(new WelcomePageOptions
+            //app.UseWelcomePage(new WelcomePageOptions
+            //{
+            //    Path = "/wp"
+            //});
+            #endregion
+
+            
+            if (env.IsDevelopment())
             {
-                Path = "/wp"
-            });
+                // sits in front of the pipleline, allow all requests to flow through middleware
+                // catches unhandled exception and prevents browser from receiving an empty response body
+                // provides UI for developer
+                app.UseDeveloperExceptionPage();
+            }
 
             app.Run(async (context) =>
             {
+                // PROVOKE EXCEPTION
+                //throw new Exception("error!");
+                int x = 4;
+                int divisionByZero = 5 / (x - 4);
+
                 // Use an interface for further abstraction!
                 var greeting = greeter.GetMessageOfTheDay();
                 await context.Response.WriteAsync(greeting);
