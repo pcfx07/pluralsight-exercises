@@ -19,6 +19,8 @@ namespace OdeToFood
         {
             // Register custom services before using!
             services.AddSingleton<IGreeter, Greeter>();
+
+            services.AddMvc();
         }
 
         // IApplicationBuilder etc. are already registered for us.
@@ -67,11 +69,17 @@ namespace OdeToFood
                 app.UseDeveloperExceptionPage();
             }
 
-            // tries to find default file and invokes StaticFiles middleware
-            // else forwards request to app.Run middleware
-            app.UseDefaultFiles();
+            #region Serving Files
+            //// tries to find default file and invokes StaticFiles middleware
+            //// else forwards request to app.Run middleware
+            //app.UseDefaultFiles();
+            //app.UseStaticFiles();
+            ////app.UseFileServer();
+            #endregion
+
             app.UseStaticFiles();
-            //app.UseFileServer();
+            // use specific conventions, route requests through mvc framework
+            app.UseMvcWithDefaultRoute();
 
             app.Run(async (context) =>
             {
