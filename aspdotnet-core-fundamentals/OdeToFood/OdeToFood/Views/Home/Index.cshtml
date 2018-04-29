@@ -1,0 +1,13 @@
+﻿@*add model directive to get intellisense*@
+@model OdeToFood.Models.Restaurant
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Razor Page Example</title>
+</head>
+<body>
+    @*model represents the model object passed in to the view result*@
+    <h1>@this.Model.Name</h1>
+    <div>The ID value is @Model.Id</div>
+</body>
+</html>
