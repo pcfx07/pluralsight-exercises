@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -79,7 +80,10 @@ namespace OdeToFood
 
             app.UseStaticFiles();
             // use specific conventions, route requests through mvc framework
-            app.UseMvcWithDefaultRoute();
+            //app.UseMvcWithDefaultRoute();
+
+            // no default routes configured
+            app.UseMvc(configureRoutes);
 
             app.Run(async (context) =>
             {
@@ -92,9 +96,18 @@ namespace OdeToFood
 
                 // Use an interface for further abstraction!
                 var greeting = greeter.GetMessageOfTheDay();
-                await context.Response.WriteAsync($"{greeting} : {env.EnvironmentName}");
+                //await context.Response.WriteAsync($"{greeting} : {env.EnvironmentName}");
+                context.Response.ContentType = "text/plain";
+                await context.Response.WriteAsync($"Not found!");
                 logger.LogInformation("greeting handled!");
             });
+        }
+
+        private void configureRoutes(IRouteBuilder routeBuilder)
+        {
+            // /Home/Index (id is optional)
+            routeBuilder.MapRoute("Default", "{controller=Home}/{action=Index}/{id?}");
+            routeBuilder.MapRoute("About", "{controller}/{action=Address}");
         }
     }
 }
