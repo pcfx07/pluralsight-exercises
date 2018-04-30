@@ -67,8 +67,13 @@ namespace OdeToFood.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken] // ENSURES THAT WE HANDED OUT THIS FORM!
         public IActionResult Create(RestaurantEditModel model)
         {
+            // TAGHELPERS WORK WITH MODELSTATE DATASTRUCT TO ASSOCIATE THE ERROR MESSAGES 
+            // https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation?view=aspnetcore-2.1
+            if (!ModelState.IsValid) return View();
+
             var newRestaurant = new Restaurant()
             {
                 Name = model.Name,
