@@ -16,7 +16,7 @@ namespace OdeToFood.Controllers
             _greeter = greeter;
         }
 
-        // ENTRY POINT by convention
+        // ENTRY POINT BY CONVENTION
         public IActionResult Index()
         {
             // will be displayed in browser
@@ -41,6 +41,21 @@ namespace OdeToFood.Controllers
             };
 
             // RENDER MODEL AS HTML
+            return View(model);
+        }
+
+        public IActionResult Details(int id)
+        {
+            var model = _restaurantData.Get(id);
+
+            if (model == null)
+            {
+                //return NotFound();
+
+                // 302, GOTO INDEX ACTION IN THE SAME CONTROLLER!
+                return RedirectToAction(nameof(Index));
+            }
+
             return View(model);
         }
     }

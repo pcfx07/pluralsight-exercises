@@ -10,14 +10,23 @@
     <table>
         @foreach (var restaurant in Model.Restaurants)
         {
-            <tr>
-                <td>@restaurant.Id</td>
-                <td>@restaurant.Name</td>
-            </tr>
+        <tr>
+            <td>@restaurant.Id</td>
+            <td>@restaurant.Name</td>
+
+            @*1. VARIANT*@
+            <td><a href="/home/details/@restaurant.Id">details</a></td>
+
+            @*2. (OLD ASP.NET) VARIANT*@
+            <td>@Html.ActionLink("Go", "Details", new { id = restaurant.Id })</td>
+
+            @*3. TAGHELPER (SERVER SIDE PROCESSING)*@
+            <td><a asp-action="Details" asp-route-id="@restaurant.Id">More</a></td>
+        </tr>
         }
 
     </table>
-    @*model represents the model object passed in to the view result*@
+    @*MODEL REPRESENTS THE MODEL OBJ. PASSED INTO THE VIEW RESULT*@
     @*<h1>@this.Model.Name</h1>
     <div>The ID value is @Model.Id</div>*@
 </body>
