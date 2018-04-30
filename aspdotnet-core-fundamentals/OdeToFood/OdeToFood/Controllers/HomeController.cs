@@ -76,7 +76,14 @@ namespace OdeToFood.Controllers
             };
 
             newRestaurant = _restaurantData.Add(newRestaurant);
-            return View("Details", newRestaurant);
+            // DANGEROUS: WE ARE STILL IN THE POST OPERATION, SO A REFRESH WOULD
+            // SEND ANOTHER POST REQUEST TO OUR SERVER. USE REDIRECT TO FORCE THE CLIENT
+            // TO SEND A GET REQUEST
+            //return View("Details", newRestaurant);
+
+            // WILL CONSULT ROUTING RULES TO IDENTIFY Id PARAMETER AS THE LAST SEGMENT OF THE URL
+            // EARCH VALUE THAT IS NOT IN THE ROUTING RULE WILL BE PUT IN THE QUERY STRING (see foo)
+            return RedirectToAction(nameof(Details), new { Id = newRestaurant.Id, foo = "bar" });
         }
     }
 }
