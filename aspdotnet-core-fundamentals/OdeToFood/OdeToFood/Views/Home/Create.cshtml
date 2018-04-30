@@ -1,0 +1,15 @@
+﻿@using OdeToFood.Models
+
+@model OdeToFood.Models.Restaurant
+
+<h1>Create</h1>
+@*POST BACK TO THE SAME URL IT CAME FROM*@
+@*FROM CREATE AN HIDDEN INPUT OF NAME "__RequestVerificationToken" WITH A CRYPTOGRAPHICLY
+SIGNIFICANT TOKEN TO PREVENT CROSS SITE REQUEST FORGERY!*@
+<form method="post">
+    @*TAGHELPER*@
+    <input asp-for="Name" />
+    <select asp-for="Cuisine" asp-items="@Html.GetEnumSelectList<CuisineType>()"></select>
+    <input type="submit" name="save" value="Save" />
+</form>
+
