@@ -2,8 +2,11 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using OdeToFood.Data;
 using OdeToFood.Services;
 
 namespace OdeToFood
@@ -11,15 +14,24 @@ namespace OdeToFood
     // Provides place to register your custom services to use with ASP.NET Core
     public class Startup
     {
-        
+        private IConfiguration _configuration;
+
+        // CONSTRUCTOR IS INJECTABLE, CREATEDEFAULTBUILDER WILL REGISTER SERVICE BEFORE CALLING .USESTARTUP
+        public Startup(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        // THIS IS NOT AN INJECTABLE METHOD THEREFORE YOU CANNOT INJECT ICONFIGURATION SERVICE HERE!
         public void ConfigureServices(IServiceCollection services)
         {
             // Register custom services before using!
             services.AddSingleton<IGreeter, Greeter>();
             // reuse for one request
             //services.AddScoped<IRestaurantData, InMemoryRestaurantData>();
-
-            services.AddSingleton<IRestaurantData, InMemoryRestaurantData>();
+            //services.AddSingleton<IRestaurantData, InMemoryRestaurantData>();
+            services.AddDbContext<OdeToFoodDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("OdeToFood")));
+            services.AddScoped<IRestaurantData, SqlRestaurantData>();
 
             services.AddMvc();
         }
