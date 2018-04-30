@@ -17,7 +17,9 @@ namespace OdeToFood
             // Register custom services before using!
             services.AddSingleton<IGreeter, Greeter>();
             // reuse for one request
-            services.AddScoped<IRestaurantData, InMemoryRestaurantData>();
+            //services.AddScoped<IRestaurantData, InMemoryRestaurantData>();
+
+            services.AddSingleton<IRestaurantData, InMemoryRestaurantData>();
 
             services.AddMvc();
         }
