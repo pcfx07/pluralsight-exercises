@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using OdeToFood.Models;
 using OdeToFood.Services;
 using OdeToFood.ViewModels;
@@ -9,11 +10,13 @@ namespace OdeToFood.Controllers
     {
         private IRestaurantData _restaurantData;
         private IGreeter _greeter;
+        private ILogger<HomeController> _logger;
 
-        public HomeController(IRestaurantData restaurantData, IGreeter greeter)
+        public HomeController(IRestaurantData restaurantData, IGreeter greeter, Microsoft.Extensions.Logging.ILogger<HomeController> logger)
         {
             _restaurantData = restaurantData;
             _greeter = greeter;
+            _logger = logger;
         }
 
         // ENTRY POINT BY CONVENTION
@@ -21,6 +24,8 @@ namespace OdeToFood.Controllers
         {
             // will be displayed in browser
             //return "Hello from the HomeController";
+
+            _logger.LogInformation("INVOKED HomeController.Index()");
 
             #region Action Results
             // CORE CONCEPT: seperate deciding what to do, from actual doing

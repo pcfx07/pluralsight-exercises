@@ -1,0 +1,29 @@
+﻿@page
+@model IndexModel
+
+<h1>All Restaurants</h1>
+<table>
+    @foreach (var restaurant in Model.Restaurants)
+    {
+        <tr>
+            <td>@restaurant.Id</td>
+            <td>@restaurant.Name</td>
+
+            @*1. VARIANT*@
+            <td><a href="/home/details/@restaurant.Id">details</a></td>
+
+            @*2. (OLD ASP.NET) VARIANT*@
+            <td>@Html.ActionLink("Go", "Details", new { id = restaurant.Id })</td>
+
+            @*3. TAGHELPER (SERVER SIDE PROCESSING)*@
+            <td><a asp-action="Details" asp-route-id="@restaurant.Id">More</a></td>
+        </tr>
+    }
+</table>
+<a asp-action="Create">Add restaurant</a>
+
+@* ANY MARKUP PLACED INSIDE HERE WILL BE PLACED INTO THE APPROPRIATE @RENDERSECTION()*@
+@section footer {
+    @this.Model.CurrentMessage
+    <div>powered by Razor Pages! :)</div>
+}
