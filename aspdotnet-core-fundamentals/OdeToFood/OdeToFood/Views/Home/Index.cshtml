@@ -19,13 +19,14 @@
             <td>@restaurant.Name</td>
 
             @*1. VARIANT*@
-            <td><a href="/home/details/@restaurant.Id">details</a></td>
+            <td>@*<a href="/home/details/@restaurant.Id">details</a>*@</td>
 
             @*2. (OLD ASP.NET) VARIANT*@
-            <td>@Html.ActionLink("Go", "Details", new { id = restaurant.Id })</td>
+            <td>@*@Html.ActionLink("Go", "Details", new { id = restaurant.Id })*@</td>
 
             @*3. TAGHELPER (SERVER SIDE PROCESSING)*@
             <td><a asp-action="Details" asp-route-id="@restaurant.Id">More</a></td>
+            <td><a asp-page="/Restaurants/Edit" asp-route-id="@restaurant.Id">Edit</a></td>
         </tr>
     }
 </table>

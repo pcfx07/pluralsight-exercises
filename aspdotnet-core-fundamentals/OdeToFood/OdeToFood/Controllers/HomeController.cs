@@ -73,6 +73,8 @@ namespace OdeToFood.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken] // ENSURES THAT WE HANDED OUT THIS FORM!
+        // WE CREATE A EXTRA MODEL TO ONLY FILL IT WITH DATA WE REALLY NEED!
+        // AND "CONVERT" IT TO OUR RESTAURANT MODEL
         public IActionResult Create(RestaurantEditModel model)
         {
             // TAGHELPERS WORK WITH MODELSTATE DATASTRUCT TO ASSOCIATE THE ERROR MESSAGES 
