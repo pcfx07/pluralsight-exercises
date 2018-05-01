@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @*CARRY MINIMAL AMOUNT OF INFORMATION BETWEEN VIEWS*@
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+        @*HERE MY CONTENT VIEW WILL BE RENDERED*@
+        @RenderBody()
+    </div>
+    <footer>
+        @RenderSection("footer", required:false)
+    </footer>
+</body>
+</html>

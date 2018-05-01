@@ -1,0 +1,16 @@
+﻿@*MAKES IT A RAZOR PAGE*@
+@*CAN ALSO MAKE USE OF _ViewImport/_ViewStart.cshtml*@
+@page "{name?}"
+
+
+@*@inject IGreeter Greeter*@
+@*<div>@Greeter.GetMessageOfTheDay()</div>*@
+
+@*IN RAZOR PAGES MY MODEL IS THE CODE BEHIND CLASS*@
+@model GreetingModel
+
+<div>@this.Model.CurrentGreeting</div>
+
+
+
+
