@@ -3,4 +3,9 @@
 
 @using OdeToFood.Models
 @using OdeToFood.ViewModels
+
+@*REGISTER TAGHELPERS IN OWN ASSEMBLY, LOOK FOR CUSTOM TAGHELPERS AND VIEWCOMPONENTS
+  THIS IS NEEDED FOR <vc:greeter>*@
+@addTagHelper *, OdeToFood
+
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

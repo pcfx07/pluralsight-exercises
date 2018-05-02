@@ -13,6 +13,10 @@
     </div>
     <footer>
         @RenderSection("footer", required:false)
+        @*THIS WILL INVOKE A VIEW COMPONENT NAMED GreeterViewComponent*@
+        @*@await Component.InvokeAsync("Greeter");*@
+        @*ALTERNATIVE: TAGHELPER (NEED TO ADJUST _ViewImports.cshtml)*@
+        <vc:greeter></vc:greeter>
     </footer>
 </body>
 </html>

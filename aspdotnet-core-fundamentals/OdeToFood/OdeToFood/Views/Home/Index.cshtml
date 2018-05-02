@@ -42,8 +42,9 @@
 <div><a asp-action="Create">Add restaurant</a></div>
 
 @* ANY MARKUP PLACED INSIDE HERE WILL BE PLACED INTO THE APPROPRIATE @RENDERSECTION()*@
-<div>
+@*IF YOU WANT TO MOVE THIS INTO THE LAYOUT YOU EITHER HAVE TO @inject THE IGreeter SERVICE OR USE A VIEWCOMPONENT*@
+@*<div>
     @section footer {
         @this.Model.CurrentMessage
 }
-</div>
+</div>*@
