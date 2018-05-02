@@ -11,12 +11,20 @@
 }
 
 <h1>All Restaurants</h1>
-<table>
+@foreach(var restaurant in Model.Restaurants)
+{
+    // DELEGATE WORK OF DISPLAYING RESTAURANT INFORMATION TO A PARTIAL VIEW
+    // BUT ALWAYS RELIES ON MODELINFORMATION THAT WE MUST PROVIDE TO THAT VIEW
+    // INFO MUST BE AVAILABLE TO THIS (=PARENT) VIEW
+    @Html.Partial("_Summary", restaurant);
+}
+
+@*<table>
     @foreach (var restaurant in Model.Restaurants)
     {
         <tr>
             <td>@restaurant.Id</td>
-            <td>@restaurant.Name</td>
+            <td>@restaurant.Name</td>*@
 
             @*1. VARIANT*@
             <td>@*<a href="/home/details/@restaurant.Id">details</a>*@</td>
@@ -25,14 +33,17 @@
             <td>@*@Html.ActionLink("Go", "Details", new { id = restaurant.Id })*@</td>
 
             @*3. TAGHELPER (SERVER SIDE PROCESSING)*@
-            <td><a asp-action="Details" asp-route-id="@restaurant.Id">More</a></td>
+            @*<td><a asp-action="Details" asp-route-id="@restaurant.Id">More</a></td>
             <td><a asp-page="/Restaurants/Edit" asp-route-id="@restaurant.Id">Edit</a></td>
         </tr>
     }
-</table>
-<a asp-action="Create">Add restaurant</a>
+</table>*@
+
+<div><a asp-action="Create">Add restaurant</a></div>
 
 @* ANY MARKUP PLACED INSIDE HERE WILL BE PLACED INTO THE APPROPRIATE @RENDERSECTION()*@
-@section footer {
-    @this.Model.CurrentMessage
+<div>
+    @section footer {
+        @this.Model.CurrentMessage
 }
+</div>
